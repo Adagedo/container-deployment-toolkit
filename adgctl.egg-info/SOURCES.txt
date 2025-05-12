@@ -1,0 +1,8 @@
+cli.py
+setup.py
+adgctl.egg-info/PKG-INFO
+adgctl.egg-info/SOURCES.txt
+adgctl.egg-info/dependency_links.txt
+adgctl.egg-info/entry_points.txt
+adgctl.egg-info/requires.txt
+adgctl.egg-info/top_level.txt
