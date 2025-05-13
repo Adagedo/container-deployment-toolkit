@@ -4,3 +4,4 @@ toolkit
 mytool.egg-info
 crud.py
 adgctl.egg-info
+config
