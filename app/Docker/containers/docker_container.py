@@ -21,9 +21,9 @@ class DockerContainerManagementService():
         
         
     
-    def run_container_detach(self, image:str, command:str):
+    def run_container_detach(self, image:str, command:str, detach:bool):
         try:
-            container = client.containers.run(image=image, command=command, detach=True)
+            container = client.containers.run(image=image, command=command, detach=detach)
             return container.logs()
         except Exception as ee:
             return ee
