@@ -1,15 +1,15 @@
 from setuptools import setup
 
 setup(
-    name='adgctl',
+    name='dojo',
     version='0.1',
     py_modules=['cli'],
     install_requires=[
         'Click',
     ],
-    entry_points='''adg
+    entry_points='''
         [console_scripts]
-        adgctl=cli:cli
+        dojo=cli:cli
     ''',
 )
 
