@@ -67,25 +67,6 @@ class DockerContainerManagementService():
         except APIError as ee:
             return ee
         
-        
-    
-    def run_container_detach(self, image:str, command:str, detach:bool):
-        try:
-            container = client.containers.run(image=image, command=command, detach=detach)
-            return container.logs()
-        except Exception as ee:
-            return ee
-        except DockerException as ee:
-            return ee
-        except ContainerError as ee:
-            return ee 
-        except ImageNotFound as ee:
-            return ee
-        except APIError as ee:
-            return ee
-        
-        
-        
     def create_container(self, image:str, command:str) -> dict[str] | str:
         try:
             container = client.containers.create(image=image, command=command)
