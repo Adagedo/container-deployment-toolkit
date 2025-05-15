@@ -11,7 +11,7 @@ client = DockerClient.from_env()
 
 class DockerSecretes():
     
-    def create_secrets(name:str, data:bytes,label:dict, driver):
+    def create_secrets(self, name:str, data:bytes,label:dict, driver):
         
         try:
             secrets_id = client.secrets.create(name=name, data=data, label=label, driver=driver)
@@ -25,7 +25,7 @@ class DockerSecretes():
         except NotFound as ee:
             return ee
         
-    def get_secrete(secrets_id:str):
+    def get_secrete(self, secrets_id:str):
         
         try:
             secrets = client.secrets.get(secret_id=secrets_id)
@@ -38,7 +38,7 @@ class DockerSecretes():
         except NotFound as ee:
             return ee
     
-    def list_secretes(filters:Optional[dict]=None)-> list:
+    def list_secretes(self, filters:Optional[dict]=None)-> list:
         
         try:
             DockerSecretes = client.secrets.list()
