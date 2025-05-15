@@ -79,56 +79,45 @@ class DockerImageManagementService():
         except APIError as ee:
             return ee
         
-    def build_with_queit_tag(self, quiet:dict):
-        
-        if quiet is None:
-            return TypeError(f"file path is not specifies")
-        try:
-            image = client.images.build(quiet=quiet)
-            return image
-        except APIError as ee:
-            return ee
-        
     def pull_images(
         self, repository:str, 
         tag:Optional[str]=None, 
         auth_config:Optional[dict]=None,
         platform:Optional[str]=None,
-        all_tags:Optional[bool]=None
-        
+        all_tags:Optional[bool]=False
         ):
         try:
-            image = client.images.pull(repository=repository)
+            image = client.images.pull(
+                repository=repository, tag=tag, 
+                auth_config=auth_config, platform=platform, 
+                all_tags=all_tags
+                )
             return image
         except APIError as ee:
             return ee
     
     
-    def push_image(self, repository:str,tag:Optional[str]=None)->Any:
+    def push_image(
+        self, repository:str,tag:Optional[str]=None,
+        stream:Optional[bool]=False, auth_config:Optional[dict]=None, 
+        decode:Optional[bool]=False
+        
+        )->Any:
         try:
             server_response = client.images.push(
                 repository=repository,
-                tag=tag
+                tag=tag,stream=stream, auth_config=auth_config, decode=decode
                 )
             return server_response
         except APIError as ee:
             return ee
         
-    def remove_image(image:str, force:Optional[bool]=None, noprune:Optional[bool]=None):
+    def remove_image(image:str, force:Optional[bool]=False, noprune:Optional[bool]=False):
         try:
-            server_response = client.images.remove(image,force=force, noprun=noprune)
+            server_response = client.images.remove(image=image,force=force, noprun=noprune)
             return server_response
         except APIError as ee:
             return ee
-        
-    def remove_image_force(image:str):
-    
-        try:
-            server_response = client.images.remove(image, force=True)
-            return server_response
-        except APIError as ee:
-            return ee
-        
         
     def search_image(term:str, limit:Optional[int]=None):
         try:
