@@ -10,5 +10,3 @@ def cli():
 @cli.command()
 def createprovider():
     pass
-    
-    
