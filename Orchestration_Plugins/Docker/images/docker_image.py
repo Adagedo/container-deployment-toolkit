@@ -59,7 +59,7 @@ class DockerImageManagementService():
             return data
         except APIError as ee:
             return ee
-    def list_images(self, repository_name:str, all:Optional[bool]=None, filters:Optional[dict]=None):
+    def list_images(self, repository_name:str, all:Optional[bool]=False, filters:Optional[dict]=None):
         try:
             images = client.images.list(name=repository_name, all=all, filters=filters)
             return images
