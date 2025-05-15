@@ -160,9 +160,20 @@ class DockerContainerManagementService():
             return ee
         
     
-    def list_container_before(self, since:str):
+    def list_container_before(
+        
+        self, since:str=None,
+        all:Optional[bool]=False,
+        before:Optional[str]=None,
+        limit:Optional[int]=None, filters:Optional[dict]=None, 
+        sparse:Optional[bool]=False, ignore_removed:Optional[bool]=False
+        ):
         try:
-            containers = client.containers.list(all=True, since=since)
+            containers = client.containers.list(
+                all=all, since=since, 
+                before=before, limit=limit, filters=filters, 
+                sparse=sparse, ignore_removed=ignore_removed
+                )
             return containers
         except Exception as ee:
             return ee
