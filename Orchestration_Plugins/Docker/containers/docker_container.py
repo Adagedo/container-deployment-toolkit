@@ -1,7 +1,7 @@
 import docker
 from docker import DockerClient
 from docker.errors import DockerException, ContainerError, ImageNotFound, APIError
-from typing import Optional
+from typing import Optional, Any
 client = DockerClient.from_env()
 
 class DockerContainerManagementService():
@@ -144,7 +144,15 @@ class DockerContainerManagementService():
         except APIError as ee:
             return ee
         
-    def list_running_containers(self):
+    def list_running_containers(
+        self,
+        all:Optional[bool]=False, 
+        before:Optional[str]=None, 
+        filters:Optional[Any]=None, 
+        limit:Optional[int]=-1, 
+        since:Optional[str]=None, 
+        sparse:Optional[bool]=False, 
+        ignore_removed:Optional[bool]=False):
         try:
             containers = client.containers.list(all=True)
             return containers
@@ -159,36 +167,10 @@ class DockerContainerManagementService():
         except APIError as ee:
             return ee
         
-    
-    def list_container_before(
         
-        self, since:str=None,
-        all:Optional[bool]=False,
-        before:Optional[str]=None,
-        limit:Optional[int]=None, filters:Optional[dict]=None, 
-        sparse:Optional[bool]=False, ignore_removed:Optional[bool]=False
-        ):
+    def delete_stopped_container(self, filters:Optional[Any])-> dict[int|str]:
         try:
-            containers = client.containers.list(
-                all=all, since=since, 
-                before=before, limit=limit, filters=filters, 
-                sparse=sparse, ignore_removed=ignore_removed
-                )
-            return containers
-        except Exception as ee:
-            return ee
-        except DockerException as ee:
-            return ee
-        except ContainerError as ee:
-            return ee 
-        except ImageNotFound as ee:
-            return ee
-        except APIError as ee:
-            return ee
-        
-    def delete_stopped_container(self)-> dict[int|str]:
-        try:
-            containers = client.containers.prune()
+            containers = client.containers.prune(filters=filters)
             return containers
         except Exception as ee:
             return ee
