@@ -186,21 +186,6 @@ class DockerContainerManagementService():
         except APIError as ee:
             return ee
         
-    def list_last_created_containers(limit:int):
-        try:
-            containers = client.containers.list(limit=limit)
-            return containers
-        except Exception as ee:
-            return ee
-        except DockerException as ee:
-            return ee
-        except ContainerError as ee:
-            return ee 
-        except ImageNotFound as ee:
-            return ee
-        except APIError as ee:
-            return ee
-
     def delete_stopped_container(self)-> dict[int|str]:
         try:
             containers = client.containers.prune()
