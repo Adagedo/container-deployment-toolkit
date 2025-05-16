@@ -5,5 +5,6 @@ mytool.egg-info
 crud.py
 adgctl.egg-info
 config
-__pycache__
+__pycache__/
 template
+cli.py
