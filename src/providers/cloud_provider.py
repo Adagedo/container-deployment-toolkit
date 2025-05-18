@@ -1,6 +1,6 @@
 from src.providers.services.aws.aws_service_provider import Aws_Provider
 from src.providers.services.azure.azure_provider import AzureProvider
-from src.providers.services.google.google_provider import GoogleProvider
+from src.providers.services.google.google_cloud_container.google_provider import GoogleProvider
 
 class CloudProvider():
     def create_provider(self, provider_name:str) -> Aws_Provider | AzureProvider |GoogleProvider:
