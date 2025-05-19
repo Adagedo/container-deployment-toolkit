@@ -702,7 +702,7 @@ class AmazonImageRegistryProvider():
         try:
             
             response = self.client.put_image_tag_mutability(
-                registryId=registryId
+                registryId=registryId,
                 repositoryName=repositoryName,
                 imageTagMutability=imageTagMutability
             )
@@ -748,17 +748,74 @@ class AmazonImageRegistryProvider():
         except self.client.exceptions.ValidationException as e :return e 
     
     
-    def put_registory_scanning_configuration(self):
-        pass 
+    def put_registory_scanning_configuration(self, scanType:Optional[str]="BASIC"|"ENHANCED", rules:Iterable[dict[str, list[dict[str]]| str, str]]=None):
+        
+        try:
+            response = self.client.put_registry_scanning_configuration(
+                scanType=scanType,
+                rules=rules
+            )
+            return response 
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.ValidationException as e :return e
+        
     
-    def put_replication_repository(self):
-        pass
+    def put_replication_repository(self, rules:dict[str]):
+        
+        try:
+            response = self.client.put_replication_configuration(
+                rules=rules
+            )
+            return response 
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.ValidationException as e :return e
+        
     
-    def set_repository_policy(self):
-        pass
+    def set_repository_policy(
+        self,
+        registryId:str,
+        repositoryName:str,
+        policyText:str,
+        force:bool=False
+    ):
+        
+        try:
+            
+            response = self.client.set_repository_policy(
+                registryId=registryId, 
+                repositoryName=repositoryName, 
+                policyText=policyText, 
+                force=force
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.RepositoryNotFoundException as e :return e
+        
     
-    def start_image_scan(self):
-        pass
+    def start_image_scan(
+        self,
+        registryId:str, 
+        repositoryName:str,
+        imageId:dict[str, str]      
+    ):
+        try:
+            
+            response = self.client.start_image_scan(
+                registryId=registryId, 
+                repositoryName=repositoryName, 
+                imageId=imageId
+            )
+            return response 
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.ValidationException as e :return e
+
     
     def start_life_cycle_policy_preview(self):
         pass
