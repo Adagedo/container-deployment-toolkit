@@ -2,10 +2,15 @@
 
 import boto3
 
-client = boto3.client('ecr')
+
 
 class AmazonImageRegistryProvider():
     
+    def __init__(self):
+        
+        self.client =  boto3.client('ecr')
+        
+        
     def batch_check_layer_availability(self):
         pass
     

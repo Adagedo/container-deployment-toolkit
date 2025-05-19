@@ -1,8 +1,11 @@
 import boto3
 
-client = boto3.client('ecs')
 
 class AwsContainerProvider():
+    
+    def __init__(self):
+        self.client = boto3.client('ecs')
+
 
     def create_cluster(self):
         pass

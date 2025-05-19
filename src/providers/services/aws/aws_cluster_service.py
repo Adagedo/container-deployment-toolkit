@@ -1,9 +1,12 @@
 """the kubernetes cluster servixe"""
 
 import boto3
-client = boto3.client('eks')
+
 
 class AmazonK8Actions():
+    
+    def __init__(self):
+        self.client =  boto3.client('eks')
     
     def AssociateAccessPolicy(self):
         pass
