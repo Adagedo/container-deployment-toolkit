@@ -9,6 +9,10 @@ from google.oauth2 import service_account
 from google.cloud.deploy_v1.services.cloud_deploy.pagers import *
 from google.api_core.operation_async import AsyncOperation
 from google.cloud.deploy_v1.types.cloud_deploy import *
+from  google.iam.v1.policy_pb2 import Policy
+from google.iam.v1.iam_policy_pb2 import SetIamPolicyRequest
+from google.cloud.location.locations_pb2 import ListLocationsResponse
+from google.protobuf.field_mask_pb2 import FieldMask
 """
 https://cloud.google.com/python/docs/reference/clouddeploy/latest/google.cloud.deploy_v1.services.cloud_deploy.CloudDeployAsyncClient#google_cloud_deploy_v1_services_cloud_deploy_CloudDeployAsyncClient_CloudDeployAsyncClient
 """
@@ -1205,13 +1209,443 @@ class GoogleCloudDeploy:
             return e
         
         
+    async def list_job_runs(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        parent:Optional[str]=None,  
+        validate_only:Optional[bool]=False,
+    )-> ListJobRunsAsyncPager | ListJobRunsResponse:
+        
+        
+        try:
+            
+            request = ListJobRunsRequest(
+                parent=parent, 
+                validate_only=validate_only
+            )
+            
+            result = self.client.list_job_runs(
+                request=request, 
+                retry=retry, 
+                parent=parent,
+                metadata=metadata, 
+                timeout=timeout
+            )
+            
+            async for response in result:
+                print(response)
+            return result 
+        
+        except Exception as e:
+            return e
+        
+    async def list_locations(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        parent:Optional[str]=None,  
+        validate_only:Optional[bool]=False,
+    )-> ListLocationsResponse:
+        pass
     
+    
+    async def list_release(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        parent:Optional[str]=None,  
+        validate_only:Optional[bool]=False,
+    )-> ListReleasesAsyncPager:
+        
+        
+        try:
+            request = ListReleasesRequest(
+                parent=parent, 
+                validate_only=validate_only
+            )
+            
+            result = self.client.list_releases(
+                request=request, 
+                retry=retry, 
+                parent=parent,
+                metadata=metadata, 
+                timeout=timeout
+            )
+            
+            async for response in result:
+                print(response)
+                
+            return result
+        except Exception as e:
+            return e
+        
+    
+    async def list_rollouts(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        parent:Optional[str]=None,  
+        validate_only:Optional[bool]=False,
+    )-> ListRolloutsAsyncPager:
+        
+        try:
+            request = ListRolloutsRequest(
+                parent=parent, 
+                validate_only=validate_only
+            )
+            
+            result = self.client.list_rollouts(
+                request=request, 
+                retry=retry, 
+                parent=parent,
+                metadata=metadata, 
+                timeout=timeout
+            )
+            
+            async for response in result:
+                print(response)
+            return result 
+        
+        except Exception as e:
+            return e
+        
+    async def list_targets(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        parent:Optional[str]=None,  
+        validate_only:Optional[bool]=False,
+    )-> ListTargetsAsyncPager:
+        
+        try:
+            
+            request = ListTargetsRequest(
+                parent=parent, 
+                validate_only=validate_only
+            )
+
+            result = self.client.list_targets(
+                request=request, 
+                retry=retry, 
+                parent=parent,
+                metadata=metadata, 
+                timeout=timeout
+            )
+            
+            async for response in result:
+                print(response)
+            return result 
+        
+        except Exception as e:
+            return e
+        
+    
+    async def retry_job(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        rollout:Optional[str]=None,
+        phase_id:Optional[str]=None, 
+        job_id:Optional[str]=None,
+        validate_only:Optional[bool]=False,
+    )-> RetryJobResponse:
+        
+        try:
+            
+            request = RetryJobRequest(
+                rollout=rollout, 
+                phase_id=phase_id, 
+                job_id = job_id, 
+                validate_only=validate_only
+            )
             
         
+            response = await self.client.retry_job(
+                request=request, 
+                retry=retry, 
+                pahse_id=phase_id,
+                metadata=metadata, 
+                timeout=timeout, 
+                job_id=job_id, 
+                rollout=rollout
+            )   
         
+            return response
         
+        except Exception as e:
+            return e
         
     
+    async def rollback_target(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        rollout_id:Optional[str]=None,
+        name:Optional[str]=None,
+        target_id:Optional[str]=None, 
+        validate_only:Optional[bool]=False,
+    )-> RollbackTargetResponse:
+        
+        
+        try:
+            request = RollbackTargetRequest(
+                name=name, 
+                target_id=target_id, 
+                rollout_id=rollout_id, 
+                validate_only=validate_only
+            )
+            
+            response = await self.client.rollback_target(
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                name=name, 
+                rollout_id=rollout_id, 
+                target_id=target_id, 
+ 
+            )
+            
+            return response 
+        except Exception as e:
+            return e
+        
+        
+    async def set_iam_policy(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        validate_only:Optional[bool]=False,
+    )->Policy:
+        pass
+    
+    
+    async def terminate_job_run(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        name:Optional[str]=None,
+        validate_only:Optional[bool]=False,
+    )->TerminateJobRunResponse:
+        
+        try:
+            
+            request = TerminateJobRunRequest(
+                name=name, 
+                validate_only=validate_only
+            )
+            
+            response = await self.client.terminate_job_run(
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                name=name,
+
+            )
+
+            return response 
+        
+        except Exception as e:
+            return e
+        
+    
+    async def update_automation(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        automation:Optional[Automation]=None,
+        update_mask:Optional[FieldMask]=None,
+        validate_only:Optional[bool]=False,
+        
+    )-> AsyncOperation:
+        
+        try:
+            request = UpdateAutomationRequest(
+                update_mask=update_mask, 
+                automation=automation, 
+                validate_only=validate_only
+            )
+            
+            
+            operation = self.client.update_automation(
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                automation=automation,
+                update_mask=update_mask
+            )
+            
+            print("waiting for operation to complete")
+            
+            response = await operation.result()
+            
+            return response 
+        
+        except Exception as e:
+            return e
+        
+        
+    async def update_custom_target_type(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        custom_target_type:Optional[CustomTargetType]=None,
+        update_mask:Optional[FieldMask]=None,
+        validate_only:Optional[bool]=False,
+    )-> AsyncOperation:
+        
+        
+        try:
+            
+            request = UpdateCustomTargetTypeRequest(
+                update_mask=update_mask, 
+                custom_target_type=custom_target_type,
+                validate_only=validate_only
+            )
+            
+            operation = self.client.update_custom_target_type(
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                custom_target_type=custom_target_type,
+                update_mask=update_mask
+            )
+            
+            print("waiting for operation to complete...")
+            
+            response = await operation.result()
+            
+            return response
+        
+        except Exception as e:
+            return e
+        
+        
+    async def update_delivery_pipeline(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        delivery_pipeline:Optional[DeliveryPipeline]=None,
+        update_mask:Optional[FieldMask]=None,
+        validate_only:Optional[bool]=False,
+    )-> AsyncOperation:
+        
+        try:
+            
+            request = UpdateDeliveryPipelineRequest(
+                update_mask=update_mask, 
+                delivery_pipeline=delivery_pipeline,
+                validate_only=validate_only
+            )
+            
+            operation = await self.client.update_delivery_pipeline(
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                delivery_pipeline=delivery_pipeline,
+                update_mask=update_mask
+            )
+            
+            print("waiting for operation to complete...")
+            
+            response = await operation.result()
+            
+            return response 
+        except Exception as e:
+            return e
         
         
         
+    async def update_deploy_policy(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        deploy_policy:Optional[DeployPolicy]=None,
+        update_mask:Optional[FieldMask]=None,
+        validate_only:Optional[bool]=False,
+    )-> AsyncOperation:
+        
+        try:
+            
+            request = UpdateDeployPolicyRequest(
+                
+                update_mask=update_mask,
+                deploy_policy=deploy_policy, 
+                validate_only=validate_only
+                
+            )
+        
+        
+            operation = self.client.update_deploy_policy(
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                deploy_policy=deploy_policy,
+                update_mask=update_mask
+            )
+        
+            print("waiting for operation to complete... ")
+        
+            response = await operation.result()
+        
+            return response 
+    
+        except Exception as e:
+            return e
+        
+    
+    async def update_target(
+        self,
+        retry: Optional[AsyncRetry] = DEFAULT,
+        timeout: Optional[Union[float, object]] = DEFAULT,
+        metadata: Optional[Sequence[Tuple[str, Union[str, bytes]]]] = DEFAULT,
+        target:Optional[Target]=None,
+        update_mask:Optional[FieldMask]=None,
+        validate_only:Optional[bool]=False,
+    )-> AsyncOperation:
+        
+        try:
+            
+            request = UpdateTargetRequest(
+                update_mask=update_mask, 
+                target=target, 
+                validate_only=validate_only
+            )
+            
+            operation = await self.client.update_target(
+                
+                request=request, 
+                retry=retry, 
+                metadata=metadata, 
+                timeout=timeout,
+                target=target,
+                update_mask=update_mask
+            )
+            
+            print("waiting for operation to commplete...")
+            
+            response = operation.result()
+            return response 
+        
+        except Exception as e:
+            return e
+    
