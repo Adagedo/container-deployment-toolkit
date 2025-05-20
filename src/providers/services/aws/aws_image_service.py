@@ -105,29 +105,20 @@ class AmazonImageRegistryProvider():
     )->dict[str]:
         
         try:
-            
             response = self.client.create_pull_through_cache_rule(
                 
             )
+            
             return response 
-        except self.client.exceptions.ServerException as e:
-            return e
-        except self.client.exceptions.InvalidParameterExceptions as e:
-            return e
-        except self.client.exceptions.ValidationException as e:
-            return e
-        except self.client.exceptions.PullThroughCacheRuleAlreadyExistsException as e:
-            return e 
-        except self.client.exceptions.UnsupportedUpstreamRegistryException as e:
-            return e
-        except self.client.exceptions.LimitExceededException as e:
-            return e
-        except self.client.exceptions.UnableToAccessSecretException as e:
-            return e
-        except self.client.exceptions.SecretNotFoundException as e:
-            return e
-        except self.client.exceptions.UnableToDecryptSecretValueException as e:
-            return e
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterExceptions as e:return e
+        except self.client.exceptions.ValidationException as e:return e
+        except self.client.exceptions.PullThroughCacheRuleAlreadyExistsException as e:return e 
+        except self.client.exceptions.UnsupportedUpstreamRegistryException as e:return e
+        except self.client.exceptions.LimitExceededException as e:return e
+        except self.client.exceptions.UnableToAccessSecretException as e:return e
+        except self.client.exceptions.SecretNotFoundException as e:return e
+        except self.client.exceptions.UnableToDecryptSecretValueException as e:return e
         
     
     def create_repository(
@@ -152,20 +143,13 @@ class AmazonImageRegistryProvider():
             
             return response 
         
-        except self.client.exceptions.ServerException as e:
-            return e 
-        except self.client.exceptions.InvalidParameterException as e:
-            return e 
-        except self.client.exceptions.InvalidTagParameterException as e:
-            return e
-        except self.client.exceptions.TooManyTagsException as e:
-            return e
-        except self.client.exceptions.RepositoryAlreadyExistsException as e:
-            return e
-        except self.client.exceptions.LimitExceedeException as e:
-            return e
-        except self.client.exceptions.KmsException as e:
-            return e
+        except self.client.exceptions.ServerException as e:return e 
+        except self.client.exceptions.InvalidParameterException as e:return e 
+        except self.client.exceptions.InvalidTagParameterException as e:return e
+        except self.client.exceptions.TooManyTagsException as e:return e
+        except self.client.exceptions.RepositoryAlreadyExistsException as e:return e
+        except self.client.exceptions.LimitExceedeException as e:return e
+        except self.client.exceptions.KmsException as e:return e
         
     def create_repository_creation_template(
         self, 
@@ -553,7 +537,6 @@ class AmazonImageRegistryProvider():
         except self.client.exceptions.RepositoryPolicyNotFoundException as e: return e
 
         
-        
     def initate_layer_upload(self, registryId:Optional[str]=None, repositoryName:Optional[str]=None)->dict[str]:
         
         try:
@@ -663,7 +646,6 @@ class AmazonImageRegistryProvider():
         except self.client.exceptions.KmsException as e: return e
         except self.client.exceptions.ImageDigestDoesNotMatchException as e: return e
         
-        
     
     def put_image_scanning_configuration(
             self,
@@ -687,10 +669,6 @@ class AmazonImageRegistryProvider():
         except self.client.exceptions.RepositoryNotFoundException as e :return e
         except self.client.exceptions.ValidationException as e: return e
 
-        
-        
-        
-        pass
     
     def put_image_tage_mutability(
         self,    
@@ -817,22 +795,147 @@ class AmazonImageRegistryProvider():
         except self.client.exceptions.ValidationException as e :return e
 
     
-    def start_life_cycle_policy_preview(self):
-        pass
-    
-    def untage_resource(self):
-        pass
-    
-    def update_pull_through_cache_rule(self):
-        pass
-    
-    def update_repository_creation_template(self):
-        pass
-    
-    def upload_layer_part(self):
-        pass
-    
-    def validate_pull_through_cache_rule(self):
-        pass
-     
+    def start_life_cycle_policy_preview(self, registryId:str, repositoryName:str, lifecyclePolicyText:str)->dict[str]:
+        
+        try:
+            response = self.client.start_lifecycle_policy(
+                registryId=registryId,
+                respositoryName=repositoryName,
+                lifecyclePolicyText=lifecyclePolicyText 
+            )
+            return response 
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.RepositoryNotFoundException as e :return e
+        except self.client.exceptions.LifecyclePolicyNotFoundException as e :return e
+        except self.client.exceptions.LifecyclePolicyPreviewProgressException as e :return e
+        except self.client.exceptions.ValidationException as e :return e
+        
 
+    def untage_resource(self, resourceArn:str, tags:Iterable[dict[str]])->dict[str]:
+        
+        try:
+            
+            response = self.client.tag_resource(
+                resourceArn=resourceArn, 
+                tags=tags
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.InvalidTagParameterException as e :return e
+        except self.client.exceptions.TooManyTagsException as e :return e
+        except self.client.exceptions.RepositoryNotFoundException as e :return e
+
+    
+    def update_pull_through_cache_rule(
+        self,
+        registryId:str,
+        ecrRepositoryPrefix:str, 
+        credentialArn:str, 
+        customRoleArn:str
+        )-> dict[str]:
+        
+        try:
+            response = self.client.update_pull_through_cache_rule(
+                registryId=registryId, 
+                ecrRepositoryPrefix=ecrRepositoryPrefix, 
+                credentialArn=credentialArn, 
+                customRoleArn=customRoleArn
+            )
+            
+            return response 
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.ValidationException as e :return e
+        except self.client.exceptions.UnableToAccessSecretException as e :return e
+        except self.client.exceptions.PullThroughCacheRuleNotFoundException as e :return e
+        except self.client.exceptions.SecretNotFoundException as e :return e
+        except self.client.exceptions.UnableToDecryptSecretValueException as e :return e
+
+    
+    def update_repository_creation_template(
+        self, 
+        prefix:Optional[str]=None,
+        description:Optional[str]=None, 
+        encryptionConfiguration:Optional[dict[str]]=None, 
+        resourceTags:Iterable[dict[str]]=None, 
+        imageTagMutability:Optional[str]="MUTABLE"|"IMMUTABLE", 
+        repositoryPolicy:Optional[str]=None, 
+        lifecyclePolicy:Optional[str]=None, 
+        appliedFor:Iterable[str]=None, 
+        customRoleArn:Optional[str]=None
+    ):
+        
+        try:
+            
+            response = self.client.update_repository_creation_template(
+                prefix=prefix, 
+                description=description,
+                encryptionConfiguration=encryptionConfiguration, 
+                resourceTags=resourceTags,
+                imageTagMutability=imageTagMutability,
+                repositoryPolicy=repositoryPolicy,
+                appliedFor=appliedFor,
+                customRoleArn=customRoleArn,
+                lifecyclePolicy=lifecyclePolicy
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.ValidationException as e :return e
+        except self.client.exceptions.TemplateNoteFoundException as e :return e
+
+
+    def upload_layer_part(
+        self,
+        registryId:str,
+        repositoryName:str,
+        uploadId:str,
+        partFirstByte:str,
+        partLastByte:str,
+        layerPartBlob:bytes)->dict[str]:
+        
+        try:
+            
+            response = self.client.upload_layer_part(
+                registryId=registryId, 
+                repositoryName=repositoryName, 
+                uploadId=uploadId, 
+                partFirstByte=partFirstByte, 
+                partLastByte=partLastByte, 
+                layerPartBlob=layerPartBlob
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.KmsException as e :return e
+        except self.client.exceptions.InvalidLayerPartException as e :return e
+        except self.client.exceptions.RepositoryNotFoundException as e :return e
+        except self.client.exceptions.UploadNotFoundException as e :return e
+        except self.client.exceptions.LimitExceededException as e :return e
+        
+    
+    def validate_pull_through_cache_rule(self,ecrRepositoryPrefix:str,registryId:str):
+        
+        try:
+            
+            response = self.client.validate_pull_through_cache(
+                registryId=registryId, 
+                ecrRepositoryPrefix=ecrRepositoryPrefix
+            )
+            
+            return response 
+        
+        
+        except self.client.exceptions.ServerException as e: return e
+        except self.client.exceptions.InvalidParameterException as e: return e
+        except self.client.exceptions.PullThroughCacheRuleNotFoundException as e :return e
+        except self.client.exceptions.ValidationException as e :return e
