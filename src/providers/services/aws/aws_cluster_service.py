@@ -701,22 +701,142 @@ class AmazonK8Actions():
         except self.client.exceptions.ResourceNotFoundException as e:return e
         
     
-    def DescribeUpdate(self):
-        pass
+    def DescribeUpdate(
+        self,
+        name:str,
+        updateId:str,
+        nodegroupName:Optional[str]=None,
+        addonName:Optional[str]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.describe_update(
+                name=name,
+                updateId=updateId,
+                nodegroupName=nodegroupName,
+                addonName=addonName
+            )
+            
+            return response
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
     
-    def DisassociateAccessPolicy(self):
-        pass
+    def DisassociateAccessPolicy(
+        self,
+        clusterName:str,
+        principalArn:str,
+        policyArn:str
+        )->dict:
+        
+        try:
+            
+            response = self.client.disassociate_access_policy(
+                clusterName=clusterName,
+                principalArn=principalArn,
+                policyArn=policyArn
+            )
+            
+            return response
+        
+                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
     
-    def DisassociateIdentityProviderConfig(self):
-        pass
+    def DisassociateIdentityProviderConfig(
+        self,
+        clusterName:str,
+        identityProviderCconfig:dict, 
+        clientRequestToken:Optional[str]=None, 
+        )->dict:
+        
+        try:
+            
+            response = self.client.disassociate_identity_provider_config(
+                clusterName=clusterName, 
+                identityProviderCconfig=identityProviderCconfig, 
+                clientRequestToken=clientRequestToken
+            )
+            return response
+        
+                            
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        
+        
     
-    def ListAccessEntries(self):
-        pass
+    def ListAccessEntries(
+        self,
+        clusterName:str,
+        associatedPolicyArn:str,
+        maxResults:Optional[int]=None,
+        nextToken:Optional[str]=None    
+        )->dict:
+        
+        try:
+            
+            response = self.client.list_access_entries(
+                clusterName=clusterName, 
+                associatedPolicyArn=associatedPolicyArn,
+                nextToken=nextToken,
+                maxResults=maxResults
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
     
-    def ListAccessPolicies(self):
-        pass
-    def ListAddon(self):
-        pass
+        
+        
+    
+    def ListAccessPolicies(self, maxResult:int, nextToken:str)->dict:
+        
+        try:
+            response = self.client.list_access_policies(
+                maxResult=maxResult,
+                nextToken=nextToken
+            )
+            
+            return response 
+         
+        except self.client.exceptions.ServerException as e:return e
+        
+    def ListAddons(
+        self,
+        clusterName:str,
+        maxResults:int, 
+        nextToken:str
+        )->dict:
+        
+        try:
+            response = self.client.list_addons(
+                clusterName=clusterName, 
+                maxResult=maxResults,
+                nextToken=nextToken
+            )
+            return response
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        
     
     def ListAssociateAccessPolicies(self):
         pass
