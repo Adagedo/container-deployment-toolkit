@@ -1,38 +1,284 @@
 """the kubernetes cluster servixe"""
 
 import boto3
-
-
+from typing import Optional
+import typing
 class AmazonK8Actions():
     
     def __init__(self):
         self.client =  boto3.client('eks')
     
-    def AssociateAccessPolicy(self):
-        pass
+    def AssociateAccessPolicy(
+        self,
+        clusterName:str, 
+        principalArn:str, 
+        policyArn:str,
+        accessScope:dict[str, str]
+        )->dict[str, str]:
+        
+        try:
+            response = self.client.associate_access_policy(
+                clusterName=clusterName, 
+                principalArn=principalArn, 
+                policyArn=policyArn, 
+                accessScope=accessScope
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        
     
-    def AssociateEncryptionPolicyConfig(self):
-        pass
+    def AssociateEncryptionPolicyConfig(self, clusterName:str, encryptionConfig:list[dict])->dict:
+        
+        try:
+            response = self.client.associate_encryption_config(
+                clusterName=clusterName, 
+                encryptionConfig=encryptionConfig
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        except self.client.exceptions.ResourceInUseExceptions as e:return e
+        
+        
     
-    def AssociateIdentityProviderConfig(self):
-        pass
+    def AssociateIdentityProviderConfig(
+        self, 
+        clusterName:str, 
+        oidc:dict[str, str], 
+        tags:str, 
+        clientRequestToken:str, 
+        )->dict[str]:
+        
+        try:
+            
+            response = self.client.associate_identity_provider_config(
+                clusterName=clusterName, 
+                oidc=oidc, 
+                tags=tags, 
+                clientRequestToken=clientRequestToken
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        except self.client.exceptions.ResourceInUseExceptions as e:return e
+        
+    def close(self):
+        try:
+            self.client.close()
+            print("closing connection...")
+        except Exception as e: return e
+            
+            
+    def CreateAccessEntry(
+        self, 
+        clusterName:str, 
+        principalArn:Optional[str]=None, 
+        kubernetesGroups:typing.Iterable[str]=None, 
+        tags:typing.Optional[dict]=None, 
+        clientRequestToken:Optional[str]=None, 
+        username:Optional[str]=None, 
+        type:Optional[str]=None, 
+        )->dict:
+        
+        try:
+            
+            response = self.client.create_access_entry(
+                clusterName=clusterName, 
+                principalArn=principalArn, 
+                kubernetesGroups=kubernetesGroups, 
+                tags=tags,clientRequestToken=clientRequestToken,
+                username=username   
+            )
+            
+            return response
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        except self.client.exceptions.ResourceInUseExceptions as e:return e
+        
     
-    def CreateAccessEntry(self):
-        pass
+    def CreateAddon(
+        self,
+        clusterName:Optional[str]=None,
+        addonName:Optional[str]=None,
+        addonVersion:Optional[str]=None,
+        serviceAccountRoleArn:Optional[str]=None,
+        resolveConflicts:Optional[str]='OVERWRITE'|'NONE'|'PRESERVE',
+        clientRequestToken:Optional[str]=None,
+        configurationValues:Optional[str]=None,
+        podIdentityAssociations:Optional[dict]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.create_addon(
+                clusterName=clusterName, 
+                addonName=addonName,
+                addonVersion=addonVersion,
+                serviceAccountRoleArn=serviceAccountRoleArn,
+                resolveConflicts=resolveConflicts,
+                clientRequestToken=clientRequestToken,
+                configurationValues=configurationValues,
+                podIdentityAssociations=podIdentityAssociations
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        except self.client.exceptions.ResourceInUseExceptions as e:return e
+        
+        
     
-    def CreateAddon(self):
-        pass
+    def CreateCluster(
+        self, 
+        name:Optional[str]=None, 
+        version:Optional[str]=None,
+        roleArn:Optional[str]=None,
+        resourcesVpcConfig:Optional[dict]=None,
+        kubernetesNetworkConfig:Optional[dict]=None,
+        logging:Optional[dict]=None, 
+        clientRequestToken:Optional[str]=None, 
+        tags:Optional[dict]=None, 
+        encryptionConfiglist:Optional[dict]=None,
+        outpostConfig:Optional[dict]=None,
+        accessConfig:Optional[dict]=None,
+        bootstrapSelfManagedAddons:Optional[bool]=None,
+        upgradePolicy:Optional[dict]=None, 
+        zonalShiftConfig:Optional[dict]=None,
+        remoteNetworkConfig:Optional[dict]=None,
+        computeConfig:Optional[dict]=None,
+        storageConfig:Optional[dict]=None,
+        )-> dict:
+        
+        try:
+            
+            response = self.client.create_cluster(
+                name=name, 
+                version=version, 
+                roleArn=roleArn,
+                resourcesVpcConfig=resourcesVpcConfig,
+                kubernetesNetworkConfig=kubernetesNetworkConfig,
+                logging=logging,
+                clientRequestToken=clientRequestToken,
+                tags=tags,
+                encryptionConfiglist=encryptionConfiglist,
+                outpostConfig=outpostConfig,
+                accessConfig=accessConfig,
+                bootstrapSelfManagedAddons=bootstrapSelfManagedAddons,
+                upgradePolicy=upgradePolicy,
+                zonalShiftConfig=zonalShiftConfig,
+                remoteNetworkConfig=remoteNetworkConfig,
+                computeConfig=computeConfig,
+                storageConfig=storageConfig   
+            )
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        except self.client.exceptions.ResourceInUseExceptions as e:return e
+        
     
-    def CreateCluster(self):
-        pass
+    def CreateEKsAnyWhereSubscription(
+        self, 
+        name:Optional[str]=None, 
+        term:Optional[dict]=None,
+        licenseQuantity:Optional[int]=None, 
+        licenseType:Optional[str]=None, 
+        autoRenew:Optional[bool]=False, 
+        clientRequestToken:Optional[str]=None, 
+        tags:Optional[dict]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.create_eks_anywhere_subscription(
+                name=name, 
+                term=term, 
+                licenseQuantity=licenseQuantity,
+                licenseType=licenseType,
+                autoRenew=autoRenew,
+                clientRequestToken=clientRequestToken,
+                tags=tags
+            )
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceLimitExceededException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        
     
-    def CreateEKsAnyWhereSubscription(self):
-        pass
+    def CreateFargateProfile(
+        self, 
+        fargateProfileName:Optional[str]=None, 
+        clusterName:Optional[str]=None, 
+        podExecutionRoleArn:Optional[str]=None, 
+        subnets:typing.Iterable[str]=None, 
+        selectors:typing.Iterable[dict]=None, 
+        clientRequestToken:Optional[str]=None, 
+        tags:Optional[dict]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.create_fargate_profile(
+                fargateProfileName=fargateProfileName,
+                clusterName=clusterName,
+                podExecutionRoleArn=podExecutionRoleArn,
+                subnets=subnets,
+                selectors=selectors ,
+                clientRequestToken=clientRequestToken, 
+                tags=tags
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceLimitExceededException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.UnsupportedAvailabilityZoneException as e:return e
     
-    def CreateFargateProfile(self):
-        pass
-    
-    def CreateNodeGroup(self):
+    def CreateNodeGroup(
+        self,
+        
+        ):
         pass
     
     def CreatePodIdentityAssociation(self):
