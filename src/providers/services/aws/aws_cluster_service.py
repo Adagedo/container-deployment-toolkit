@@ -684,8 +684,22 @@ class AmazonK8Actions():
         except self.client.exceptions.ServiceUnavailableException as e:return e
         
     
-    def DescribePodIdentityAssociation(self):
-        pass
+    def DescribePodIdentityAssociation(self, clusterName:str, associationId:str)->dict:
+        
+        try:
+            
+            response = self.client.describe_pod_identity_association(
+                clusterName=clusterName, 
+                associationId=associationId
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
     
     def DescribeUpdate(self):
         pass
