@@ -277,30 +277,180 @@ class AmazonK8Actions():
     
     def CreateNodeGroup(
         self,
+        clusterName:Optional[str]=None, 
+        nodegroupName:Optional[str]=None, 
+        scalingConfig:Optional[dict]=None,
+        diskSize:Optional[int]=None, 
+        subnet:typing.Iterable[str]=None, 
+        instanceTypes:typing.Iterable[str]=None, 
+        amiType:Optional[str]='AL2_x86_64'|'AL2_x86_64_GPU'|'AL2_ARM_64'|'CUSTOM'|'BOTTLEROCKET_ARM_64'|'BOTTLEROCKET_x86_64'|'BOTTLEROCKET_ARM_64_FIPS'|'BOTTLEROCKET_x86_64_FIPS'|'BOTTLEROCKET_ARM_64_NVIDIA'|'BOTTLEROCKET_x86_64_NVIDIA'|'WINDOWS_CORE_2019_x86_64'|'WINDOWS_FULL_2019_x86_64'|'WINDOWS_CORE_2022_x86_64'|'WINDOWS_FULL_2022_x86_64'|'AL2023_x86_64_STANDARD'|'AL2023_ARM_64_STANDARD'|'AL2023_x86_64_NEURON'|'AL2023_x86_64_NVIDIA'|'AL2023_ARM_64_NVIDIA',
+        remoteAccess:Optional[dict]=None, 
+        nodeRole:Optional[str]=None, 
+        labels:Optional[dict]=None, 
+        taints:typing.Iterable[dict]=None, 
+        tags:Optional[dict]=None, 
+        clientRequestToken:Optional[str]=None, 
+        launchTemplate:Optional[dict]=None,
+        updateConfig:Optional[dict]=None, 
+        nodeRepairConfig:Optional[dict[str, bool]]=None, 
+        capacityType:Optional[str]='ON_DEMAND'|'SPOT'|'CAPACITY_BLOCK',
+        version:Optional[str]=None, 
+        releaseVersion:Optional[str]=None
+        )-> dict:
         
-        ):
+        try:
+            response = self.client.create_nodegroup(
+                clusterName=clusterName,
+                nodegroupName=nodegroupName,
+                scalingConfig=scalingConfig,
+                diskSize=diskSize,
+                subnet=subnet,
+                instanceTypes=instanceTypes,
+                amiType=amiType,
+                remoteAccess=remoteAccess,
+                nodeRole=nodeRole,
+                labels=labels,
+                taints=taints,
+                tags=tags,
+                clientRequestToken=clientRequestToken,
+                launchTemplate=launchTemplate,
+                updateConfig=updateConfig,
+                nodeRepairConfig=nodeRepairConfig,
+                capacityType=capacityType,
+                version=version,releaseVersion=releaseVersion
+            )
+
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceLimitExceededException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+    
+    def CreatePodIdentityAssociation(
+        self,
+        clusterName:Optional[str]=None,
+        namespace:Optional[str]=None,
+        serviceAccount:Optional[str]=None,
+        roleArn:Optional[str]=None, 
+        clientRequestToken:Optional[str]=None, 
+        tags:Optional[dict]=None
+        )-> dict:
+
+        try:
+
+            response = self.client.create_pod_identity_association(
+                clusterName=clusterName,
+                namespace=namespace,
+                serviceAccount=serviceAccount,
+                roleArn=roleArn,
+                clientRequestToken=clientRequestToken,
+                tags=tags
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ResourceLimitExceededException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+
+    
+    def DeleteAccessEntry(
+        self,
+        clusterName:Optional[str]=None, 
+        principalArn:Optional[str]=None        
+        )->dict:
+        
+        try:
+            response = self.client.delete_access_entry(
+                clusterName=clusterName, 
+                principalArn=principalArn
+            )
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+
+        
         pass
     
-    def CreatePodIdentityAssociation(self):
-        pass
+    def DeleteAddon(self, clusterName:Optional[str]=None, addonName:Optional[str]=None, preserve:Optional[str]=None)->dict:
+        try:
+            
+            response = self.client.delete_addon(
+                clusterName=clusterName, 
+                addonName=addonName, 
+                preserve=preserve
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
     
-    def DeleteAccessEntry(self):
-        pass
+    def DeleteCluster(self, name:str)->dict:
+        try:
+            response = self.client.delete_cluster(name=name)
+            return response 
+        except Exception as e: return e
     
-    def DeleteAddon(self):
-        pass
+    def DeleteEKsAnyWhereSubscription(self, id:str)->dict:
+        try:
+            
+            response = self.client.delete_eks_anywhere_subscription(
+                id=id
+            )
+            
+            return response
+           
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        
     
-    def DeleteCluster(self):
-        pass
+    def DeleteFragateProfile(self, clusterName:str, fargateProfileName:str)->dict:
+        
+        try:
+            
+            response = self.client.delete_fragate_profile(
+                clusterName=clusterName, 
+                fargateProfileName=fargateProfileName
+            )
+            
+            return response
+        
+                   
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        
     
-    def DeleteEKsAnyWhereSubscription(self):
-        pass
-    
-    def DeleteFragateProfile(self):
-        pass
-    
-    def DeleteNodeGroup(self):
-        pass
+    def DeleteNodeGroup(self, clusterName:str, nodegroupName:str)->dict:
+        
+        try:
+            response = self.client.delete_nodegroup(
+                clusterName=clusterName, 
+                nodegroupName=nodegroupName
+            )
+            return response
+                   
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
     
     def DeletePodIdentityAssociation(self):
         pass
