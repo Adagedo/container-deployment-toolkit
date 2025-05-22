@@ -996,14 +996,63 @@ class AmazonK8Actions():
         except self.client.exceptions.ResourceNotFoundException as e:return e
         
     
-    def ListTagsForResource(self):
-        pass
+    def ListTagsForResource(self, resourceArn:str)->dict:
+        
+        try:
+            
+            response = self.client.list_tags_for_resource(resourceArn=resourceArn)
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.BadRequestException as e:return e
+        except self.client.exceptions.NotFoundException as e:return e
+  
+        
+    def ListUpdates(self,
+        name:str,
+        nodegroupName:Optional[str]=None,
+        addonName:Optional[str]=None,
+        nextToken:Optional[str]=None,
+        maxResults:Optional[int]=1
+        ):
+        
+        try:
+            
+            response = self.client.list_updates(
+                name=name, 
+                nodegroupName=nodegroupName,
+                addonName=addonName, 
+                nextToken=nextToken, 
+                maxResults=maxResults
+            )
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
     
-    def ListUpdates(self):
-        pass
-    
-    def RegisterCluster(self):
-        pass
+    def RegisterCluster(self, name:str, connectorConfig:Optional[dict]=None, clientRequestToken:Optional[str]=None, tags:Optional[dict]=None)->dict:
+        
+        try:
+            response = self.client.register_cluster(
+                name=name, 
+                connectorConfig=connectorConfig,
+                clientRequestToken=clientRequestToken,
+                tags=tags
+            )
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceLimitExceededException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.AccessDeniedException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+        except self.client.exceptions.ResourcePropagationDelayException as e:return e
+        
+        
     
     
     def TagResource(self):
