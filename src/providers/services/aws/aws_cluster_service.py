@@ -452,38 +452,237 @@ class AmazonK8Actions():
         except self.client.exceptions.ResourceInUseException as e:return e
         except self.client.exceptions.ServiceUnavailableException as e:return e
     
-    def DeletePodIdentityAssociation(self):
-        pass
+    def DeletePodIdentityAssociation(self, clustername:str, associationId:str)->dict:
+        
+        try:
+            
+            res = self.client.delete_pod_identity_association(
+                clusterName=clustername, 
+                associationId=associationId
+            )
+            return res
+        
+                           
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        
     
-    def DeregisterCluster(self):
-        pass
+    def DeregisterCluster(self, name:str)->dict:
+        try:
+            res = self.client.deregister_cluster(name=name)
+            return res
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.AccessDeniedException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        
+        
+        
+    def DescribetAccessEntry(self, clusterName:str, principalArn:str)->dict:
+        try:
+            
+            res = self.client.describe_access_entry(
+                clusterName=clusterName, 
+                principalArn=principalArn
+            )
+            return res
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
     
-    def DescribetAccessEntry(self):
-        pass
+    def DescribeAddon(self, clusterName:str, addonName:str)->dict:
+        
+        try:
+            res = self.client.describe_addon(
+                clusterName=clusterName, 
+                addonName=addonName
+            )
+            return res
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
     
-    def DescribeAddon(self):
-        pass
+    def DescribeAddonConfiguration(self, addonName:str, addonVersion:str)->dict:
+        
+        try:
+            response = self.client.describe_addon_configuration(
+                addonName=addonName, 
+                addonVersion=addonVersion
+            )
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
     
-    def DescribeAddonConfiguration(self):
-        pass
+    def DescribeAddonVersions(
+        self,
+        kubernetesVersion:Optional[str]=None, 
+        maxResult:Optional[int]=None, 
+        nextToken:Optional[str]=None, 
+        addonName:Optional[str]=None, 
+        types:typing.Iterable[str]=None, 
+        publishers:typing.Iterable[str]=None, 
+        owners:typing.Iterable[str]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.describe_addon_versions(
+                kubernetesVersion=kubernetesVersion,
+                maxResult=maxResult,
+                nextToken=nextToken,
+                addonName=addonName,
+                types=types,
+                publishers=publishers,
+                owners=owners
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
+        
+    def DescribeCluster(self, name:str)->dict:
+        
+        try:
+            response = self.client.describe_cluster(name=name)
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
     
-    def DescribeAddonVersions(self):
-        pass
+    def DescribeClusterVersions(
+        self,
+        clusterType:Optional[str]=None,
+        maxResults:Optional[str]=None, 
+        nextToken:Optional[str]=None, 
+        defaultOnly:Optional[bool]=True|False,
+        includeAll:Optional[bool]=True|False,
+        status:Optional[str]='unsupported'|'standard-support'|'extended-support',
+        versionStatus:Optional[str]='UNSUPPORTED'|'STANDARD_SUPPORT'|'EXTENDED_SUPPORT',
+        clusterVersions:typing.Iterable[str]=None
+        
+    )->dict:
+        try:
+            
+            res = self.client.describe_cluster_versions(
+                clusterType=clusterType,
+                maxResults=maxResults,
+                nextToken=nextToken,
+                defaultOnly=defaultOnly,
+                includeAll=includeAll,
+                status =status ,
+                versionStatus=versionStatus,
+                clusterVersions=clusterVersions
+            )
+            
+            return res
+        
+               
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        
+    def DescribeEKsAnyWhereSubscription(self, id:str)->dict:
+        
+        try:
+            
+            response = self.client.describe_eks_anywhere_subscription(id=id)
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
+        
     
-    def DescribeEKsAnyWhereSubscription(self):
-        pass
+    def DescribeFargateProfile(self, clusterName:str, fargateProfileName:str)->dict:
+        try:
+            
+            response = self.client.describe_fargate_profile(
+                clusterName=clusterName,
+                fargateProfileName=fargateProfileName
+            )
+            
+            return response 
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
     
-    def DescribeFragateProfile(self):
-        pass
+    def DescribeIdentityProviderConfig(self, clusterName:str, identityProviderCconfig:dict)->dict:
+        
+        try:
+            
+            response = self.client.describe_identity_provider_config(
+                clusterName=clusterName, 
+                identityProviderCconfig=identityProviderCconfig
+            )
+            
+            return response
+        
+                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        
+        
+    def DescribeInsight(self, clusterName:str, id:str)->dict:
+        
+        try:
+            response = self.client.describe_insight(
+                clusterName=clusterName, 
+                id=id
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
     
-    def DescribeIdentityProviderConfig(self):
-        pass
-    
-    def DescribeInsight(self):
-        pass
-    
-    def DescribeNodeGroup(self):
-        pass
+    def DescribeNodeGroup(self, clusterName:str, nodegroupName:str)->dict:
+        
+        try:
+            
+            response = self.client.describe_nodegroup(
+                clusterName=clusterName, 
+                nodegroupName=nodegroupName
+            )
+            return response 
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        
     
     def DescribePodIdentityAssociation(self):
         pass
