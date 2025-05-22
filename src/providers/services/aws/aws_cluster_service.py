@@ -838,30 +838,163 @@ class AmazonK8Actions():
         except self.client.exceptions.ClientException as e:return e
         
     
-    def ListAssociateAccessPolicies(self):
-        pass
-    
-    def ListCluster(self):
-        pass
-    
-    def ListEKsAnyWhereSubscriptions(self):
-        pass
-    
-    def ListFragteProfiles(self):
-        pass
-    
-    def ListIdentityProviderConfig(self):
-        pass
-    
-    def ListInsights(self):
+    def ListAssociateAccessPolicies(
+        self,
+        clusterName:str,
+        principalArn:str,
+        maxResults:Optional[int]=None,
+        nextToken:Optional[str]=None,
+        )->dict:
         
-        pass
+        try:
+            
+            response = self.client.list_associated_access_policies(
+                clusterName=clusterName,
+                principalArn=principalArn,
+                maxResults=maxResults,
+                nextToken=nextToken
+            )
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
     
-    def ListNodeGroups(self):
-        pass
+    def ListCluster(self, maxResults:Optional[int]=None, nextToken:Optional[str]=None, include:typing.Iterable[str]=None)->dict:
+        
+        try:
+            
+            response = self.client.list_clusters(
+                maxResults=maxResults,
+                nextToken=nextToken,
+                include=include
+            )
+            
+            return response 
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
     
-    def ListPodIdentityAssociation(self):
-        pass
+    def ListEKsAnyWhereSubscriptions(self,maxResults:int, nextToken:str, includeStatus:typing.Iterable[str]=['CREATING'|'ACTIVE'|'UPDATING'|'EXPIRING'|'EXPIRED'|'DELETING'])->dict:
+        
+        try:
+            response = self.client.list_eks_anywhere_subscriptions(
+                maxResults=maxResults,
+                nextToken=nextToken,
+                includeStatus=includeStatus
+            )
+            
+            return response 
+        
+                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+    
+    def ListFargteProfiles(self, clusterName:str, maxResults:Optional[int]=1,nextToken:Optional[str]=None)->dict:
+        
+        try:
+            
+            response = self.client.list_fargate_profiles(
+                clusterName=clusterName,
+                maxResults=maxResults,
+                nextToken=nextToken
+            )
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
+    def ListIdentityProviderConfig(self, clusterName:str, maxResults:Optional[int]=1,nextToken:Optional[str]=None)->dict:
+        
+        try:
+            response = self.client.list_identity_provider_configs(
+                clusterName=clusterName,
+                maxResults=maxResults,
+                nextToken=nextToken
+            )
+            
+            return response
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+    
+    def ListInsights(self,clusterName:str, filter:Optional[dict], maxResults:Optional[int]=1, nextToken:Optional[str]=None)->dict:
+        
+        try:
+            response = self.client.list_insights(
+                clusterName=clusterName,
+                maxResults=maxResults,
+                nextToken=nextToken
+            )
+            
+            return response 
+        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
+
+    def ListNodeGroupsg(self, clusterName:str, maxResults:Optional[int]=1,nextToken:Optional[str]=None)->dict:
+        
+        try:
+            
+            response = self.client.list_nodegroups(
+                clusterName=clusterName,
+                maxResults=maxResults,
+                nextToken=nextToken
+            )
+            
+            return response 
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ServiceUnavailableException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+            
+        
+    
+    def ListPodIdentityAssociation(
+        self,
+        clusterName:str,
+        namespace:Optional[str]=None,
+        serviceAccount:Optional[str]=None, 
+        maxResults:Optional[int]=1,
+        nextToken:Optional[str]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.list_pod_identity_associations(
+                clusterName=clusterName,
+                namespace=namespace,
+                serviceAccount=serviceAccount,
+                maxResults=maxResults,
+                nextToken=nextToken
+            )
+            
+            return response 
+        
+                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        
     
     def ListTagsForResource(self):
         pass
