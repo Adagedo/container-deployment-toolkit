@@ -1138,24 +1138,193 @@ class AmazonK8Actions():
         except self.client.exceptions.ClientException as e:return e
         except self.client.exceptions.ResourceInUseException as e:return e
     
-    def UpdateClusterConfig(self):
-        pass
+    def UpdateClusterConfig(
+        self,
+        name:str, 
+        resourcesVpcConfig:Optional[dict]=None,
+        logging:Optional[dict]=None, 
+        clientRequestToken:Optional[str]=None, 
+        accessConfig:Optional[dict]=None,
+        upgradePolicy:Optional[str]=None, 
+        zonalShiftConfig:Optional[dict]=None, 
+        computeConfig:Optional[dict]=None, 
+        kubernetesNetworkConfig:Optional[dict]=None, 
+        storageConfig:Optional[dict]=None, 
+        remoteNetworkConfig:Optional[dict]=None
+        )-> dict:
+        
+        try:
+            
+            response = self.client.update_cluster_config(
+                name=name,
+                resourcesVpcConfig=resourcesVpcConfig,
+                logging=logging,
+                clientRequestToken=clientRequestToken,
+                accessConfig=accessConfig,
+                upgradePolicy=upgradePolicy,
+                upgradePolicy=upgradePolicy,
+                zonalShiftConfig=zonalShiftConfig,
+                computeConfig=computeConfig,
+                kubernetesNetworkConfig=kubernetesNetworkConfig,
+                storageConfig=storageConfig,
+                remoteNetworkConfig=remoteNetworkConfig
+            )
+            
+            return response 
+        
+                                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        
     
-    def UpdateClusterVersion(self):
-        pass
+    def UpdateClusterVersion(self, name:str, version:str, clientRequestToken:Optional[str]=None, force:Optional[bool]=False)->dict:
+        
+        
+        try:
+            
+            response = self.client.update_cluster_version(
+                name=name, 
+                version=version,
+                clientRequestToken=clientRequestToken, force=force
+            )
+            
+            return response 
+        
+                                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+        except self.client.exceptions.ThrottlingException as e:return e
+        except self.client.exceptions.InvalidStateException as e:return e
     
-    def UpdateEKsAnyWhereSubscription(self):
-        pass
+    def UpdateEKsAnyWhereSubscription(self, id:str, autoRenew:str, clientRequestToken:str)->dict:
+        
+        try:
+            
+            response = self.client.update_eks_anywhere_subscription(
+                id=id, 
+                autoRenew=autoRenew, 
+                clientRequestToken=clientRequestToken
+            )
+            
+            return response 
+        
+                                               
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+
+        
+        
     
-    def UpdateNodeGroupConfig(self):
-        pass
+    def UpdateNodeGroupConfig(
+        self, 
+        clustername:str, 
+        nodegroupName:str,
+        labels:Optional[dict]=None, 
+        taints:Optional[dict]=None,
+        scalingConfig:Optional[dict]=None, 
+        updateConfig:Optional[dict]=None, 
+        nodeRepairConfig:Optional[dict]=None, 
+        clientRequestToken:Optional[str]=None
+    )->dict:
+        
+        try:
+            
+            response = self.client.update_nodegroup_config(
+                clusterName=clustername, 
+                nodegroupName=nodegroupName,
+                labels=labels,
+                taints=taints,
+                scalingConfig=scalingConfig,
+                updateConfig=updateConfig,
+                nodeRepairConfig=nodeRepairConfig,
+                clientRequestToken=clientRequestToken
+            )
+            
+            return response
+        
+                                                       
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+        
+        
+    def UpdateNodegroupVersion(
+        self,
+        clusterName:str, 
+        nodegroupName:str, 
+        version:str, 
+        releaseVersion, 
+        launchTemplate:Optional[dict]=None, 
+        force:Optional[bool]=False, 
+        clientRequestToken:Optional[str]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.update_nodegroup_version(
+                clusterName=clusterName,
+                nodegroupName=nodegroupName,
+                version=version,
+                releaseVersion=releaseVersion,
+                launchTemplate=launchTemplate,
+                force=force,
+                clientRequestToken=clientRequestToken
+            )
+            
+            return response
+        
+                                                               
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
+         
     
-    def UpdateNodegroupVersion(self):
-        pass
-    
-    def UpdatePodIdentityAssociation(self):
-        pass
-    
+    def UpdatePodIdentityAssociation(
+        self, 
+        clusterName:str, 
+        associationId:str,
+        roleArn:str, 
+        clientRequestToken:str, 
+    )->dict:
+        
+        try:
+            
+            response = self.client.update_pod_identity_association(
+                clusterName=clusterName,
+                associationId=associationId,
+                roleArn=roleArn,
+                clientRequestToken=clientRequestToken
+            )
+            
+            return response
+        
+                                                                 
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e    
+
 
 class AmazonK8DataTypes():
     
