@@ -1055,17 +1055,88 @@ class AmazonK8Actions():
         
     
     
-    def TagResource(self):
-        pass
+    def TagResource(self, resourceArn:str, tags:dict)->dict:
+        try:
+            response = self.client.tag_resource(
+                resourceArn=resourceArn,
+                tags=tags
+            )
+            
+            return response
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.BadRequestException as e:return e
+        except self.client.exceptions.NotFoundException as e:return e
+                
+    def UnTagResource(self, resoourceArn:str, tagKeys:list)->dict:
+        
+        try:
+            response = self.client.untag_resource(
+                resresoourceArn=resoourceArn,
+                tagKeys=tagKeys
+            )
+            
+            return response 
+        
+                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.BadRequestException as e:return e
+        except self.client.exceptions.NotFoundException as e:return e
     
-    def UnTagResource(self):
-        pass
+    def UpdateAccessEntry(self, clusterName:str, principalArn:str, kubernetesGroups:typing.Iterable[str]=None, clientRequestToken:Optional[str]=None, username:Optional[str]=None)->dict:
+        
+        try:
+            
+            response = self.client.update_access_entry(
+                clusterName=clusterName,
+                principalArn=principalArn,
+                kubernetesGroups=kubernetesGroups,
+                clientRequestToken=clientRequestToken,
+                username=username
+            )
+            
+            return response 
+        
+                
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
     
-    def UpdateAccessEntry(self):
-        pass
-    
-    def UpdateAddon(self):
-        pass
+    def UpdateAddon(
+        self,
+        clusterName:str, 
+        addonName:str,
+        addonVersion:Optional[str]=None, 
+        serviceAccountRoleArn:Optional[str]=None, 
+        resolveConflicts:Optional[str]='OVERWRITE'|'NONE'|'PRESERVE',
+        clientRequestToken:Optional[str]=None, 
+        configurationValues:Optional[str]=None, 
+        podIdentityAssociations:typing.Iterable[dict]=None
+        )->dict:
+        
+        try:
+            
+            response = self.client.update_addon(
+                clusterName=clusterName,
+                addonName=addonName,
+                serviceAccountRoleArn=serviceAccountRoleArn,
+                addonVersion=addonVersion,
+                resolveConflicts=resolveConflicts,
+                clientRequestToken=clientRequestToken,
+                configurationValues=configurationValues,
+                podIdentityAssociations=podIdentityAssociations
+            )
+            return response 
+        
+                        
+        except self.client.exceptions.ServerException as e:return e
+        except self.client.exceptions.InvalidRequestException as e:return e
+        except self.client.exceptions.InvalidParameterException as e:return e
+        except self.client.exceptions.ResourceNotFoundException as e:return e
+        except self.client.exceptions.ClientException as e:return e
+        except self.client.exceptions.ResourceInUseException as e:return e
     
     def UpdateClusterConfig(self):
         pass
