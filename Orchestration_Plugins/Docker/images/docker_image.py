@@ -2,11 +2,11 @@ import docker
 from docker.errors import APIError, BuildError
 from typing import Optional, Any
 
-# set up a client 
-
-client = docker.DockerClient.from_env()
-
 class DockerImageManagementService():
+    
+    def __init__(self):
+        
+        self.client = docker.DockerClient.from_env()
     
     
     def build(
@@ -30,7 +30,7 @@ class DockerImageManagementService():
         if path is None:
             return TypeError(f"file path is not specifies")
         try:
-            image = client.images.build(
+            image = self.client.images.build(
                 path=path,fileobj=fileobj, tag=tag, 
                 nocache=nocache, timeout=timeout, pull=pull, quiet=quiet,
                 rm=rm, custom_context=custom_context, forcerm=forcerm, encoding=encoding,
@@ -47,7 +47,7 @@ class DockerImageManagementService():
     
     def get_image(self, name:str):
         try:
-            image = client.images.get(name=name)
+            image = self.client.images.get(name=name)
             return image
         except APIError as ee:
             return ee 
@@ -55,26 +55,26 @@ class DockerImageManagementService():
     def get_registry_data(self, name:str, auth_config:Optional[dict]=None):
         
         try:
-            data = client.images.get_registry_data(name=name, auth_config=auth_config)
+            data = self.client.images.get_registry_data(name=name, auth_config=auth_config)
             return data
         except APIError as ee:
             return ee
     def list_images(self, repository_name:str, all:Optional[bool]=False, filters:Optional[dict]=None):
         try:
-            images = client.images.list(name=repository_name, all=all, filters=filters)
+            images = self.client.images.list(name=repository_name, all=all, filters=filters)
             return images
         except APIError as ee:
             return ee
     def load_image_previously_saved(self, data:any) -> list[str|int]:
         try:
-            images = client.images.load(data=data)
+            images = self.client.images.load(data=data)
             return images
         except APIError as ee:
             return ee
         
     def delete_unused_images(self)-> dict:
         try:
-            response = client.images.prune(filters=None)
+            response = self.client.images.prune(filters=None)
             return response 
         except APIError as ee:
             return ee
@@ -87,7 +87,7 @@ class DockerImageManagementService():
         all_tags:Optional[bool]=False
         ):
         try:
-            image = client.images.pull(
+            image = self.client.images.pull(
                 repository=repository, tag=tag, 
                 auth_config=auth_config, platform=platform, 
                 all_tags=all_tags
@@ -104,7 +104,7 @@ class DockerImageManagementService():
         
         )->Any:
         try:
-            server_response = client.images.push(
+            server_response = self.client.images.push(
                 repository=repository,
                 tag=tag,stream=stream, auth_config=auth_config, decode=decode
                 )
@@ -112,16 +112,16 @@ class DockerImageManagementService():
         except APIError as ee:
             return ee
         
-    def remove_image(image:str, force:Optional[bool]=False, noprune:Optional[bool]=False):
+    def remove_image(self, image:str, force:Optional[bool]=False, noprune:Optional[bool]=False):
         try:
-            server_response = client.images.remove(image=image,force=force, noprun=noprune)
+            server_response = self.client.images.remove(image=image,force=force, noprun=noprune)
             return server_response
         except APIError as ee:
             return ee
         
-    def search_image(term:str, limit:Optional[int]=None):
+    def search_image(self, term:str, limit:Optional[int]=None):
         try:
-            response = client.images.search(term=term, limit=limit)
+            response = self.client.images.search(term=term, limit=limit)
             return response 
         except APIError as ee:
             return ee
