@@ -2,9 +2,12 @@ import docker
 from docker import DockerClient
 from docker.errors import DockerException, ContainerError, ImageNotFound, APIError
 from typing import Optional, Any
-client = DockerClient.from_env()
+
 
 class DockerContainerManagementService():
+    
+    def __init__(self):
+        self.client = DockerClient.from_env()
     
     def run_container(
         self, image:str, command:Optional[str|list]=None,
@@ -43,7 +46,7 @@ class DockerContainerManagementService():
         working_dir:Optional[str]=None,  cpu_rt_period:Optional[dict]=None
     ):
         try: 
-            container = client.containers.run(
+            container = self.client.containers.run(
                 image=image, command=command, auto_remove=auto_remove, blkio_weight_device=blkio_weight_device, 
                 cap_add=cap_add, cap_drop=cap_drop, cgroup_parent=cgroup_parent,cgroupns=cgroups, cpu_count=cpu_count, cpu_percent=cpu_percent,cpuset_mems=cpuset_mems,
                 cpu_period=cpu_period, cpu_quota=cpu_quota, cpu_rt_runtime=cpu_rt_runtime, cpu_rt_period=cpu_rt_period,cpu_shares=cpu_shares, cpuset_cpus=cpuset_cpus, 
@@ -104,7 +107,7 @@ class DockerContainerManagementService():
         
         ) -> dict[str] | str:
         try:
-            container = client.containers.create(
+            container = self.client.containers.create(
                 image=image, command=command, ports=port, auto_remove=auto_remove, blkio_weight_device=blkio_weight_device, 
                 cap_add=cap_add, cap_drop=cap_drop, cgroup_parent=cgroup_parent,cgroupns=cgroups, cpu_count=cpu_count, cpu_percent=cpu_percent,cpuset_mems=cpuset_mems,
                 cpu_period=cpu_period, cpu_quota=cpu_quota, cpu_rt_runtime=cpu_rt_runtime, cpu_rt_period=cpu_rt_period,cpu_shares=cpu_shares, cpuset_cpus=cpuset_cpus, 
@@ -131,7 +134,7 @@ class DockerContainerManagementService():
         
     def get_container_by_id(self, id:str)-> dict[str]:
         try:
-            container = client.containers.get(container_id=id)
+            container = self.client.containers.get(container_id=id)
             return container
         except Exception as ee:
             return ee
@@ -154,7 +157,7 @@ class DockerContainerManagementService():
         sparse:Optional[bool]=False, 
         ignore_removed:Optional[bool]=False):
         try:
-            containers = client.containers.list(
+            containers = self.client.containers.list(
                 all=all, 
                 before=before, 
                 filters=filters, 
@@ -178,7 +181,7 @@ class DockerContainerManagementService():
         
     def delete_stopped_container(self, filters:Optional[Any])-> dict[int|str]:
         try:
-            containers = client.containers.prune(filters=filters)
+            containers = self.client.containers.prune(filters=filters)
             return containers
         except Exception as ee:
             return ee
