@@ -7,15 +7,18 @@ from docker.errors import (
     )
 from typing import Optional, Any
 
-client = DockerClient.from_env()
+
 
 class DockerPlugins():
     
+    def __init__(self):
+        
+        self.client = DockerClient.from_env()
     
     def get_plugin(self, name:str):
         
         try:
-            plugin = client.plugins.get(name=name)
+            plugin = self.client.plugins.get(name=name)
             return plugin
         except Exception as ee:
             return ee 
@@ -29,7 +32,7 @@ class DockerPlugins():
     def install_plugins(self,remote_name:str, local_name:str):
         
         try:
-            plugins = client.plugins.install(
+            plugins = self.client.plugins.install(
                 remote_name=remote_name, local_name=local_name
             )
             return plugins
@@ -45,7 +48,7 @@ class DockerPlugins():
     
     def list_plugins(self)-> list[str]:
         try:
-            plugins:list[str] = client.plugins.list()
+            plugins:list[str] = self.client.plugins.list()
             return plugins
         except Exception as ee:
             return ee 
@@ -60,7 +63,7 @@ class DockerPlugins():
     def create_plugin(self, name:Optional[Any], plugin_data_dir:Optional[Any], gzip:Optional[bool]=False):
         
         try:
-            new_plugin = client.plugins.create(
+            new_plugin = self.client.plugins.create(
                 name=name, plugin_data_dir=plugin_data_dir, gzip=gzip
             )
             return new_plugin
