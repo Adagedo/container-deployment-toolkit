@@ -154,7 +154,15 @@ class DockerContainerManagementService():
         sparse:Optional[bool]=False, 
         ignore_removed:Optional[bool]=False):
         try:
-            containers = client.containers.list(all=True)
+            containers = client.containers.list(
+                all=all, 
+                before=before, 
+                filters=filters, 
+                limit=limit, 
+                since=since, 
+                sparse=sparse, 
+                ignore_removed=ignore_removed
+            )
             return containers
         except Exception as ee:
             return ee

@@ -14,6 +14,5 @@ def docker_client_authentication(username:str, password:str, registry:str="https
         print(f"docker error:{ee}")
     except Exception as e:
         print(f"unexpected error during login:{e}")
-    return None
     
 
