@@ -8,15 +8,19 @@ from typing import(
     Optional
     )
 
-client = DockerClient.from_env()
+
 
 
 class DockerVolume():
     
+    def __init__(self):
+        
+        self.client = DockerClient.from_env()
+    
     
     def create_volume(self, name:str, driver:Optional[str]=None, driver_opts:Optional[dict]=None, labels:Optional[dict]=None):
         try:
-            volumes = client.volumes.create(name=name, driver=driver, driver_opts=driver_opts, labels=labels)
+            volumes = self.client.volumes.create(name=name, driver=driver, driver_opts=driver_opts, labels=labels)
             return volumes
         
         except Exception as ee:
@@ -29,10 +33,10 @@ class DockerVolume():
             return ee
         
         
-    def get_volumes(volume_id:str):
+    def get_volumes(self, volume_id:str):
         
         try:
-            volume = client.volumes.get(volume_id=volume_id)
+            volume = self.client.volumes.get(volume_id=volume_id)
             return volume
         except Exception as ee:
             return ee 
@@ -47,7 +51,7 @@ class DockerVolume():
         
         try:
             
-            volumes = client.volumes.list(filters=filters)
+            volumes = self.client.volumes.list(filters=filters)
             return volumes
         except Exception as ee:
             return ee 
@@ -59,9 +63,9 @@ class DockerVolume():
             return ee
         
         
-    def delete_unused_volumes(filters:Optional[dict]=None):
+    def delete_unused_volumes(self, filters:Optional[dict]=None):
         try:
-            response = client.volumes.prune(filters=filters)
+            response = self.client.volumes.prune(filters=filters)
             return response 
         except Exception as ee:
             return ee 
