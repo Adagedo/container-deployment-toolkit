@@ -7,7 +7,7 @@ def docker_client_authentication(username:str, password:str, registry:str="https
         client = DockerClient.from_env()
         response = client.login(username=username, password=password, registry=registry)
         print(f"login successfull:{response.get('Username')}")
-        return client 
+        return client if response else None 
     except APIError as ee:
         print(f"docker login failed:{ee.explanation}")
     except DockerException as ee:
