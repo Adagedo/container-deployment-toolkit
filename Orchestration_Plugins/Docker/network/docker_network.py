@@ -2,16 +2,16 @@ import docker
 from docker import DockerClient
 from typing import Optional
 from docker.errors import APIError, NotFound
-client = DockerClient.from_env()
-
-
 
 class Network():
-    
-    pass
+    pass 
 
 
 class DockerNetWorkManagementSystem():
+    
+    def __init__(self):
+        self.client = DockerClient.from_env()
+
     
     def create_network(
         self,
@@ -27,7 +27,7 @@ class DockerNetWorkManagementSystem():
     )-> Network:
         try:
             
-            network_response = client.networks.create(
+            network_response = self.client.networks.create(
                 name=name, driver=driver, check_duplicate=chech_duplicate,
                 internal=internal, labels=labels, enable_ipv6=enabel_ipv6, 
                 attachable=attachable,
@@ -45,7 +45,7 @@ class DockerNetWorkManagementSystem():
         scope:Optional[str] = "local"|"global"|"swarm", 
     )-> Network:
         try:
-            response = client.networks.get(
+            response = self.client.networks.get(
                 network_id=network_id, 
                verbose=verbose, 
                scope=scope                           
@@ -65,7 +65,7 @@ class DockerNetWorkManagementSystem():
         greedy:Optional[bool]=None
     )-> list[Network]:
         try:
-            networks = client.networks.list(
+            networks = self.client.networks.list(
                 names=names, 
                 ids=ids,
                 filters=filters,
@@ -77,7 +77,7 @@ class DockerNetWorkManagementSystem():
         
     def delete_unused_network(self, filters:Optional[dict]=None)-> dict[str,any|any, str]:
         try:
-            response = client.networks.prune(filters=filters)
+            response = self.client.networks.prune(filters=filters)
             return response 
         except APIError as ee:
             return ee
