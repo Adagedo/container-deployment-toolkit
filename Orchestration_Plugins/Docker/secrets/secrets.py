@@ -7,14 +7,16 @@ from docker.errors import (
     )
 from typing import Optional
 
-client = DockerClient.from_env()
-
 class DockerSecretes():
+    
+    def __init__(self):
+        
+        self.client = DockerClient.from_env()
     
     def create_secrets(self, name:str, data:bytes,label:dict, driver):
         
         try:
-            secrets_id = client.secrets.create(name=name, data=data, label=label, driver=driver)
+            secrets_id = self.client.secrets.create(name=name, data=data, label=label, driver=driver)
             return secrets_id
         except Exception as ee:
             return ee 
@@ -28,7 +30,8 @@ class DockerSecretes():
     def get_secrete(self, secrets_id:str):
         
         try:
-            secrets = client.secrets.get(secret_id=secrets_id)
+            secrets = self.client.secrets.get(secret_id=secrets_id)
+            return secrets
         except Exception as ee:
             return ee 
         except APIError as ee:
@@ -41,7 +44,7 @@ class DockerSecretes():
     def list_secretes(self, filters:Optional[dict]=None)-> list:
         
         try:
-            DockerSecretes = client.secrets.list()
+            DockerSecretes = self.client.secrets.list()
             return DockerSecretes
         except Exception as ee:
             return ee 
