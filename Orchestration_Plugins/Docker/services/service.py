@@ -9,9 +9,13 @@ from docker.errors import (
 from Orchestration_Plugins.Docker.swarm.swarm import DockerSwarm
 from typing import (Optional, Any, Literal, Iterable)
 
-client = DockerClient.from_env()
+
 request_swarm = DockerSwarm()
 class DockerServices():
+    
+    def __init__(self):
+        
+        self.client = DockerClient.from_env()
     
     def create_service(
         self, image:str, command:Optional[str|Iterable[str]]=None, 
@@ -33,7 +37,7 @@ class DockerServices():
         
         try:
             request_swarm.initialise_swarm()
-            services = client.services.create(
+            services = self.client.services.create(
                 image=image, command=command, args=args, 
                 constraints=constraints, preferences=preferences, 
                 maxreplicas=maxreplicas, platforms=platforms, container_labels=container_labels, 
@@ -59,7 +63,7 @@ class DockerServices():
         
         try:
             request_swarm.initialise_swarm()
-            service = client.services.get(service_id=service_id, insert_defaults=insert_defaults)
+            service = self.client.services.get(service_id=service_id, insert_defaults=insert_defaults)
             return service
         except Exception as ee:
             return ee 
@@ -76,7 +80,7 @@ class DockerServices():
         
         try:
             request_swarm.initialise_swarm()
-            service = client.services.list(filters=filters, status=status)
+            service = self.client.services.list(filters=filters, status=status)
             return service
         except Exception as ee:
             return ee 
